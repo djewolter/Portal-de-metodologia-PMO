@@ -1,0 +1,9 @@
+{
+  "name": "Portal de Metodologia de Projetos v2",
+  "description": "Uma página interativa que descreve as fases do ciclo de vida da gestão de projetos, permitindo aos usuários explorar cada etapa e acessar os documentos de saída correspondentes.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "prompt": ""
+}

@@ -1,0 +1,214 @@
+import { Phase, ControlSupportProcess } from './types';
+
+export const PHASES: Phase[] = [
+  {
+    id: 1,
+    name: 'Demanda',
+    color: 'bg-[#0A3130]',
+    highlightColor: 'ring-[#0A3130]',
+    textColor: 'text-white',
+    activities: [
+      { id: '1.1', name: 'Avaliar formulário de demanda', isMandatory: true, isPmoAction: true, description: 'PMO avalia a viabilidade e alinhamento estratégico da nova demanda.' },
+      { id: '1.2', name: 'Elaborar canvas demanda', isMandatory: false, isPmoAction: false },
+      { id: '1.3', name: 'Solicitar informações RFI', isMandatory: false, isPmoAction: false },
+      { id: '1.4', name: 'Solicitar propostas RFP', isMandatory: false, isPmoAction: false },
+      { id: '1.5', name: 'Mapear arquitetura - DAS', isMandatory: false, isPmoAction: false },
+      { id: '1.6', name: 'Apresentar Solução', isMandatory: false, isPmoAction: false },
+      { id: '1.7', name: 'Mapear benefícios', isMandatory: false, isPmoAction: false },
+      { id: '1.8', name: 'Cálculo de ROI - Retorno sobre Investimento', isMandatory: false, isPmoAction: false, description: 'Cálculo do Retorno sobre o Investimento para avaliar a rentabilidade do projeto.' },
+      { 
+        id: '1.9', 
+        name: 'Elaborar business case', 
+        isMandatory: true, 
+        isPmoAction: false, 
+        isOutputDocument: true, 
+        description: 'O Business Case é o documento obrigatório de saída da fase Demanda.' 
+      },
+      { id: '1.10', name: 'Apresentação de defesa do projeto', isMandatory: false, isPmoAction: false },
+    ],
+  },
+  {
+    id: 2,
+    name: 'Prepare',
+    color: 'bg-[#77B836]',
+    highlightColor: 'ring-[#77B836]',
+    textColor: 'text-white',
+    activities: [
+        { id: '2.1', name: 'Mapear requisitos técnicos', isMandatory: true, isPmoAction: false },
+        { id: '2.2', name: 'Realizar fluxo de caixa do Projeto', isMandatory: true, isPmoAction: false },
+        { id: '2.3', name: 'Mapear requisitos funcionais', isMandatory: false, isPmoAction: false },
+        { id: '2.4', name: 'Validar termos contratuais', isMandatory: false, isPmoAction: false },
+        { id: '2.5', name: 'Realizar Kick Off do projeto', isMandatory: false, isPmoAction: false },
+        { 
+            id: '2.6', 
+            name: 'Elaborar Termo de Abertura (TAP)', 
+            isMandatory: true, 
+            isPmoAction: false, 
+            isOutputDocument: true, 
+            description: 'O Termo de Abertura (TAP) é o documento obrigatório de saída da fase Prepare.' 
+        },
+        { id: '2.7', name: 'Apresentação de defesa do projeto', isMandatory: false, isPmoAction: false },
+    ],
+  },
+  {
+    id: 3,
+    name: 'Explore',
+    color: 'bg-[#498733]',
+    highlightColor: 'ring-[#498733]',
+    textColor: 'text-white',
+    activities: [
+      { id: '3.1', name: 'Documento de Escopo', isMandatory: false, isPmoAction: false },
+      { id: '3.2', name: 'Estrutura Analítica do Projeto (EAP)', isMandatory: false, isPmoAction: false },
+      { id: '3.3', name: 'Elaborar Cronograma', isMandatory: true, isPmoAction: false },
+      { id: '3.4', name: 'Planejar treinamentos', isMandatory: false, isPmoAction: false },
+      { id: '3.5', name: 'Mapear stakeholders', isMandatory: false, isPmoAction: false },
+      { id: '3.6', name: 'Planejar testes', isMandatory: false, isPmoAction: false },
+      { id: '3.7', name: 'Planejar comunicação', isMandatory: false, isPmoAction: false },
+      {
+        id: '3.8',
+        name: 'Validar Plano de Projeto',
+        isMandatory: true,
+        isPmoAction: false,
+        isOutputDocument: true,
+        description: 'O Plano de Projeto validado é o documento obrigatório de saída da fase Explore.'
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: 'Realize',
+    color: 'bg-[#3095A6]',
+    highlightColor: 'ring-[#3095A6]',
+    textColor: 'text-white',
+    hasSprints: true,
+    activities: [
+      { id: '4.1', name: 'Gerir impactos organizacionais', isMandatory: false, isPmoAction: false },
+      { id: '4.2', name: 'Executar testes unitários', isMandatory: false, isPmoAction: false },
+      { id: '4.3', name: 'Avaliar prontidão testes integrado', isMandatory: false, isPmoAction: false },
+      { id: '4.4', name: 'Executar testes integrados', isMandatory: false, isPmoAction: false },
+      { 
+        id: '4.5', 
+        name: 'Executar plano de cutover', 
+        isMandatory: true, 
+        isPmoAction: false, 
+        isOutputDocument: true, 
+        description: 'Executar plano de cutover é o documento obrigatório de saída da fase Realize.' 
+      },
+      { id: '4.6', name: 'Avaliar prontidão para Go Live', isMandatory: false, isPmoAction: false },
+      { id: '4.7', name: 'SPRINT - Realizar reunião de planejamento', isMandatory: false, isPmoAction: false, isSprintActivity: true, description: 'Planejamento do que será entregue na Sprint.' },
+      { id: '4.8', name: 'SPRINT - Realizar reunião de retrospectiva', isMandatory: false, isPmoAction: false, isSprintActivity: true, description: 'Revisão do processo da última Sprint para melhoria contínua.' },
+      { id: '4.9', name: 'SPRINT - Reunião de revisão', isMandatory: false, isPmoAction: false, isSprintActivity: true, description: 'Apresentação do que foi concluído na Sprint.' },
+      { id: '4.10', name: 'SPRINT - Realizar Reuniões Diárias', isMandatory: false, isPmoAction: false, isSprintActivity: true, description: 'Sincronização diária rápida da equipe do projeto.' },
+    ],
+  },
+  {
+    id: 5,
+    name: 'Deploy',
+    color: 'bg-[#62C0D3]',
+    highlightColor: 'ring-[#62C0D3]',
+    textColor: 'text-black',
+    activities: [
+      { id: '5.1', name: 'Realizar reunião Go/No Go', isMandatory: false, isPmoAction: false, description: 'Reunião crítica para tomada de decisão quanto à entrada em produção.' },
+      { 
+        id: '5.2', 
+        name: 'Executar plano de Cutover', 
+        isMandatory: true, 
+        isPmoAction: false, 
+        isOutputDocument: true, 
+        description: 'Executar plano de cutover é o documento obrigatório de saída da fase Deploy.'
+      },
+      { id: '5.3', name: 'Realizar plano de Mudanças', isMandatory: false, isPmoAction: false, description: 'Execução das ações organizacionais e operacionais para sustentar a nova solução.' },
+    ],
+  },
+  {
+    id: 6,
+    name: 'Run',
+    color: 'bg-[#587DBD]',
+    highlightColor: 'ring-[#587DBD]',
+    textColor: 'text-white',
+    activities: [
+      { id: '6.1', name: 'Apoiar operação', isMandatory: false, isPmoAction: false },
+      { id: '6.2', name: 'Registrar lições aprendidas', isMandatory: false, isPmoAction: false },
+      { 
+        id: '6.3', 
+        name: 'Elaborar termo de encerramento', 
+        isMandatory: true, 
+        isPmoAction: false, 
+        isOutputDocument: true, 
+        description: 'Elaborar termo de encerramento é o documento obrigatório de saída da fase Run.'
+      },
+    ],
+  },
+  {
+    id: 7,
+    name: 'Pós-Projeto',
+    color: 'bg-[#867AB5]',
+    highlightColor: 'ring-[#867AB5]',
+    textColor: 'text-white',
+    activities: [
+      { id: '7.1', name: 'Realizar pesquisa de satisfação', isMandatory: false, isPmoAction: false, description: 'Pesquisa com stakeholders para mensurar a percepção sobre o projeto e identificar melhorias.' },
+      { id: '7.2', name: 'Avaliar desempenho', isMandatory: false, isPmoAction: false, description: 'Análise de indicadores de prazo, custo, escopo e qualidade para identificar pontos fortes e fracos.' },
+      { id: '7.3', name: 'Realizar captura de valor', isMandatory: false, isPmoAction: false, description: 'Mensuração dos benefícios concretos gerados pelo projeto para confirmar o retorno do investimento (ROI).' },
+    ],
+  },
+];
+
+
+export const CONTROL_SUPPORT_PROCESSES: ControlSupportProcess[] = [
+  {
+    id: 'csp-1',
+    name: 'Solicitar Cadastro de novos Fornecedores',
+    objective: 'Iniciar o processo de inclusão de novos fornecedores na base da empresa para habilitação comercial.',
+    responsible: 'PMO',
+    frequency: 'Sob demanda',
+  },
+  {
+    id: 'csp-2',
+    name: 'Solicitar envio de comunicados',
+    objective: 'Solicitar a comunicação oficial de marcos ou avisos importantes aos stakeholders do projeto.',
+    responsible: 'PMO / Equipe de Comunicação',
+    frequency: 'Sob demanda',
+  },
+  {
+    id: 'csp-3',
+    name: 'Solicitar Registro de Linhas de Base',
+    objective: 'Formalizar a aprovação de escopo, prazo e custo como referência oficial do projeto.',
+    responsible: 'PMO',
+    frequency: 'Ao término das fases de planejamento ou replanejamento',
+  },
+  {
+    id: 'csp-4',
+    name: 'Registrar Mudança de Escopo',
+    objective: 'Formalizar e controlar alterações no escopo originalmente aprovado do projeto.',
+    responsible: 'Gerente de Projeto / PMO',
+    frequency: 'Sob demanda (sempre que houver solicitação de mudança)',
+  },
+  {
+    id: 'csp-5',
+    name: 'Registrar Atas de Reunião',
+    objective: 'Documentar os principais pontos, decisões e encaminhamentos das reuniões do projeto.',
+    responsible: 'PMO ou Secretário da Reunião',
+    frequency: 'Após cada reunião formal',
+  },
+  {
+    id: 'csp-6',
+    name: 'Registro Status do Projeto',
+    objective: 'Atualizar periodicamente os principais indicadores e andamento do projeto.',
+    responsible: 'PMO',
+    frequency: 'Semanal',
+  },
+  {
+    id: 'csp-7',
+    name: 'Gerir Riscos e Problemas',
+    objective: 'Monitorar, registrar e tratar riscos e problemas que possam impactar o projeto.',
+    responsible: 'Gerente de Projeto / PMO',
+    frequency: 'Semanal e sob demanda',
+  },
+  {
+    id: 'csp-8',
+    name: 'Gerir Fluxo de Caixa',
+    objective: 'Controlar os desembolsos, previsões e execução orçamentária do projeto.',
+    responsible: 'Controladoria / PMO',
+    frequency: 'Mensal ou conforme previsão de pagamento',
+  },
+];

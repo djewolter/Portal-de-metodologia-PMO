@@ -8,9 +8,16 @@ interface ControlAndSupportProcessProps {
   onMinutesInfoClick: () => void;
   onStatusReportInfoClick: () => void;
   onCashFlowInfoClick: () => void;
+  onTestingGuideClick: () => void;
 }
 
-const ControlAndSupportProcess: React.FC<ControlAndSupportProcessProps> = ({ onProcessClick, onMinutesInfoClick, onStatusReportInfoClick, onCashFlowInfoClick }) => {
+const ControlAndSupportProcess: React.FC<ControlAndSupportProcessProps> = ({ 
+  onProcessClick, 
+  onMinutesInfoClick, 
+  onStatusReportInfoClick, 
+  onCashFlowInfoClick,
+  onTestingGuideClick 
+}) => {
 
   const getActionText = (name: string): string => {
     const lowerName = name.toLowerCase();
@@ -90,6 +97,19 @@ const ControlAndSupportProcess: React.FC<ControlAndSupportProcessProps> = ({ onP
                 <button
                   key={process.id}
                   onClick={onCashFlowInfoClick}
+                  className={cardClasses}
+                  title={`Clique para ver detalhes de "${process.name}"`}
+                >
+                  {cardContent}
+                </button>
+              );
+            }
+
+            if (process.id === 'csp-9') {
+              return (
+                <button
+                  key={process.id}
+                  onClick={onTestingGuideClick}
                   className={cardClasses}
                   title={`Clique para ver detalhes de "${process.name}"`}
                 >

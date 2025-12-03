@@ -12,6 +12,7 @@
 
 
 
+
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI, Type } from '@google/genai';
 // FIX: Import 'SparklesIcon' to resolve 'Cannot find name' errors.

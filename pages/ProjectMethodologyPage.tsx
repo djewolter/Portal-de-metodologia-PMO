@@ -65,6 +65,7 @@ const ProjectMethodologyPage: React.FC = () => {
   const [isMinutesInfoModalOpen, setIsMinutesInfoModalOpen] = useState(false);
   const [isStatusReportInfoModalOpen, setIsStatusReportInfoModalOpen] = useState(false);
   const [isCashFlowInfoModalOpen, setIsCashFlowInfoModalOpen] = useState(false);
+  const [isTestingGuideModalOpen, setIsTestingGuideModalOpen] = useState(false);
 
 
   const handlePhaseClick = (id: number) => {
@@ -91,6 +92,10 @@ const ProjectMethodologyPage: React.FC = () => {
 
   const handleCashFlowInfoClick = () => {
     setIsCashFlowInfoModalOpen(true);
+  };
+
+  const handleTestingGuideClick = () => {
+    setIsTestingGuideModalOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -151,6 +156,7 @@ const ProjectMethodologyPage: React.FC = () => {
             onMinutesInfoClick={handleMinutesInfoClick}
             onStatusReportInfoClick={handleStatusReportInfoClick}
             onCashFlowInfoClick={handleCashFlowInfoClick}
+            onTestingGuideClick={handleTestingGuideClick}
           />
         </div>
 
@@ -260,6 +266,25 @@ const ProjectMethodologyPage: React.FC = () => {
                 className="inline-flex items-center gap-2 text-lg font-semibold text-[#0A3130] hover:text-[#3095A6] hover:underline transition-colors"
             >
                 PMO@sipal.com
+            </a>
+        </div>
+      </Modal>
+
+      <Modal isOpen={isTestingGuideModalOpen} onClose={() => setIsTestingGuideModalOpen(false)}>
+        <div className="text-center p-4">
+            <h2 className="text-2xl font-bold text-[#0A3130] mb-4">Guia de Testes</h2>
+            <p className="text-gray-700 mb-6 text-lg">
+                Acesse o guia completo de testes para garantir a qualidade da entrega do seu projeto.
+            </p>
+            <a 
+                href="https://gruposipal.sharepoint.com/:w:/s/PMO/IQAaL0fQnDWaSaYU1ornSUCaAdywQjfOiUBWXCzBNhP1APU?e=vDvQyt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-lg font-semibold text-[#0A3130] hover:text-[#3095A6] hover:underline transition-colors"
+                onClick={() => setIsTestingGuideModalOpen(false)}
+            >
+                Acessar Guia de Testes
+                <ArrowUpRightFromSquareIcon className="h-5 w-5" />
             </a>
         </div>
       </Modal>

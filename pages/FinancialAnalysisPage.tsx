@@ -1,14 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { UploadIcon, ChartBarIcon, SparklesIcon, RefreshCwIcon, XCircleIcon } from '../components/Icons';
 import BackButton from '../components/BackButton';
@@ -67,7 +56,7 @@ const formatCurrency = (value: number): string => {
   }).format(value);
 };
 
-// AI Report formatter component
+// AI Analysis Report formatter component
 const AiAnalysisReport: React.FC<{ text: string }> = ({ text }) => {
     const formattedContent = useMemo(() => {
         return text.split('\n').map((line, index) => {
@@ -425,21 +414,21 @@ const FinancialAnalysisPage: React.FC = () => {
             }
             
             const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-            const anosUnicos = [...new Set(filteredData.map(r => parseYear(r['Ano'])))].filter(y => y > 0).sort();
+            // Explicitly type map callback parameter and result, and use explicit number for years
+            const anosUnicos: number[] = Array.from(new Set(filteredData.map((r: any) => parseYear(r['Ano'])) as number[])).filter((y: number) => y > 0).sort((a: number, b: number) => a - b);
 
             if (anosUnicos.length === 0) {
                 throw new Error("Nenhum dado com ano válido encontrado para os filtros selecionados.");
             }
 
-            const startYear = anosUnicos[0];
+            const startYear: number = anosUnicos[0];
             
             let lastDataYear: number = 0;
             let lastDataMonthIndex: number = -1;
 
-            filteredData.forEach(row => {
-                // FIX: Add explicit type annotation to 'year' to prevent type inference issues.
+            filteredData.forEach((row: any) => {
                 const year: number = parseYear(row['Ano']);
-                if ((year as number) > 0) { // FIX: Add explicit cast to satisfy TS compiler for arithmetic operation
+                if (year > 0) {
                     for (let i = meses.length - 1; i >= 0; i--) {
                         if (parseNumber(row[meses[i]]) !== 0) {
                             if (year > lastDataYear) {
@@ -461,11 +450,10 @@ const FinancialAnalysisPage: React.FC = () => {
 
             let lastRealizadoYear: number = 0;
             let lastRealizadoMonthIndex: number = -1;
-            filteredData.forEach(row => {
-                // FIX: Add explicit type annotation to 'year' to prevent type inference issues when used in comparisons.
+            filteredData.forEach((row: any) => {
                 const year: number = parseYear(row['Ano']);
                 const status = (row['Status'] || '').toString().trim().toLowerCase();
-                if ((year as number) > 0 && status === 'realizado') {
+                if (year > 0 && status === 'realizado') {
                      for (let i = meses.length - 1; i >= 0; i--) {
                         if (Math.abs(parseNumber(row[meses[i]])) > 0) {
                             if (year > lastRealizadoYear) {
@@ -481,9 +469,10 @@ const FinancialAnalysisPage: React.FC = () => {
             });
             
             const firstMonthOfStartYear = 0;
-            const lastRealizadoTotalIndex = lastRealizadoYear > 0 ? (lastRealizadoYear - startYear) * 12 + (lastRealizadoMonthIndex - firstMonthOfStartYear) : -1;
+            const lastRealizadoTotalIndex: number = lastRealizadoYear > 0 ? (lastRealizadoYear - startYear) * 12 + (lastRealizadoMonthIndex - firstMonthOfStartYear) : -1;
 
             const labels: string[] = [];
+            // FIX: Add explicit type annotation to 'allMonthlyData' array.
             const allMonthlyData: { mesPrevisto: number, mesMudancas: number, mesCompromissado: number, mesRealizado: number }[] = [];
 
             for (let year = startYear; year <= lastDataYear; year++) {
@@ -494,7 +483,7 @@ const FinancialAnalysisPage: React.FC = () => {
                     labels.push(`${mes.substring(0,3)}/${year.toString().slice(2)}`);
                     
                     let mesPrevisto = 0, mesMudancas = 0, mesCompromissado = 0, mesRealizado = 0;
-                    filteredData.filter(r => parseYear(r['Ano']) === year).forEach(row => {
+                    filteredData.filter((r: any) => parseYear(r['Ano']) === year).forEach((row: any) => {
                         const valor = parseNumber(row[mes]);
                         const status = (row['Status'] || '').toString().trim().toLowerCase();
                         if (status === 'previsto') mesPrevisto += valor;
@@ -517,7 +506,10 @@ const FinancialAnalysisPage: React.FC = () => {
                 cumRealizado += mesRealizado;
                 cumPrevisto += mesPrevisto;
                 cumMudancas += mesMudancas;
-                cumCompromissado += (index <= lastRealizadoTotalIndex) ? 0 : mesCompromissado;
+                
+                // Explicitly type ternary result
+                const compromissadoToAdd: number = (index <= lastRealizadoTotalIndex) ? 0 : mesCompromissado;
+                cumCompromissado += compromissadoToAdd;
 
                 sCurveSeries['Previsto'].push(cumPrevisto);
                 sCurveSeries['Realizado'].push(cumRealizado);
@@ -535,7 +527,7 @@ const FinancialAnalysisPage: React.FC = () => {
             const decompositionTotals: { [key: string]: number } = {};
             statusOrder.forEach(s => decompositionTotals[s] = 0);
             
-            filteredData.forEach(row => {
+            filteredData.forEach((row: any) => {
                 const statusRaw = (row['Status'] || '').toString().trim().toLowerCase();
                 let statusKey: string | null = null;
                 if (statusRaw === 'previsto') statusKey = 'Previsto';
@@ -560,9 +552,9 @@ const FinancialAnalysisPage: React.FC = () => {
             const decompositionLabels = statusOrder.filter(s => decompositionTotals[s] !== 0);
             const decompositionValues = decompositionLabels.map(s => decompositionTotals[s]);
 
-            const realizedData = filteredData.filter(row => (row['Status'] || '').toString().trim().toLowerCase() === 'realizado');
+            const realizedData = filteredData.filter((row: any) => (row['Status'] || '').toString().trim().toLowerCase() === 'realizado');
             const projectTotals: { [key: string]: number } = {};
-            realizedData.forEach(row => {
+            realizedData.forEach((row: any) => {
                 const projectName = row['Projeto Vinculado'] || 'Não Especificado';
                 // FIX: Explicitly type projectTotal to avoid inference issues.
                 let projectTotal: number = 0;
@@ -577,7 +569,7 @@ const FinancialAnalysisPage: React.FC = () => {
             const realizedByProjectValues = sortedProjects.map(([, total]) => total);
 
             const categoryTotals: { [key: string]: number } = {};
-            realizedData.forEach(row => {
+            realizedData.forEach((row: any) => {
                 const categoryName = row['Categoria'] || 'Não Especificada';
                 // FIX: Explicitly type categoryTotal to avoid inference issues.
                 let categoryTotal: number = 0;
@@ -602,7 +594,7 @@ const FinancialAnalysisPage: React.FC = () => {
             let realizedByContractData = null;
             if (filteredData.length > 0 && 'Contrato' in filteredData[0]) {
                 const contractTotals: { [key: string]: number } = {};
-                realizedData.forEach(row => {
+                realizedData.forEach((row: any) => {
                     const contractName = row['Contrato'] || 'Não Especificado';
                     // FIX: Explicitly type contractTotal to avoid inference issues.
                     let contractTotal: number = 0;

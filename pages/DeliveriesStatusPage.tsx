@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect, useRef } from 'react';
 import BackButton from '../components/BackButton';
 import { SCurveDataPoint } from '../types';
@@ -238,7 +228,7 @@ const DeliveriesStatusPage: React.FC = () => {
         try {
             const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
             if (savedData) {
-                const parsed = JSON.parse(savedData);
+                const parsed: any = JSON.parse(savedData);
                 // FIX: Add type guard to ensure parsed data from localStorage is an array before calling .map() to prevent runtime errors with corrupted data.
                 if (Array.isArray(parsed)) {
                     const dataWithDates = parsed.map((item: any) => ({

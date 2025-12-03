@@ -211,4 +211,11 @@ export const CONTROL_SUPPORT_PROCESSES: ControlSupportProcess[] = [
     responsible: 'Controladoria / PMO',
     frequency: 'Mensal ou conforme previsão de pagamento',
   },
+  {
+    id: 'csp-9',
+    name: 'Guia de Testes',
+    objective: 'Padronizar a estratégia, execução e aprovação de testes (Unitários, Integrados e UAT).',
+    responsible: 'QA / PMO',
+    frequency: 'Fases Realize e Deploy',
+  },
 ];
